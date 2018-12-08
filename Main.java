@@ -9,18 +9,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Main extends JFrame implements ActionListener{
 
@@ -58,6 +63,9 @@ public class Main extends JFrame implements ActionListener{
 
 
 class MenuPanel extends JPanel implements MouseListener {
+	
+	//input output stuff
+	//Create a file chooser
 	
 	private Font raleway;
 	private JButton photo = new JButton("Upload Photo");
@@ -164,14 +172,27 @@ class MenuPanel extends JPanel implements MouseListener {
 	
 	}
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
+		Object source = e.getSource();
+		if(source == photo) {
+			JFileChooser chooser = new JFileChooser();
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        "JPG,PNG,GIF Images", "jpg", "gif","png");
+		    chooser.setFileFilter(filter);
+		    int returnVal = chooser.showOpenDialog(getParent());
+		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		       System.out.println("You chose to open this file: " +
+		            chooser.getSelectedFile().getName());
+	    }
+	        
+		}
 	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 	}
+	///////////////////////////////////////////////////////////
 	
 	//Graphics
-
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
