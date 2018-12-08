@@ -64,9 +64,8 @@ public class Main extends JFrame implements ActionListener{
 
 class MenuPanel extends JPanel implements MouseListener {
 	
-	//input output stuff
-	//Create a file chooser
 	
+	private boolean reset = false;
 	private Font raleway;
 	private JButton photo = new JButton("Upload Photo");
 	private JButton analyze = new JButton("Analyze");
@@ -129,7 +128,22 @@ class MenuPanel extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
+		Object source = e.getSource();
+		if(source == photo) {
+			JFileChooser chooser = new JFileChooser();
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        "JPG,PNG,GIF Images", "jpg", "gif","png");
+		    chooser.setFileFilter(filter);
+		    int returnVal = chooser.showOpenDialog(getParent());
+		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		       System.out.println("You chose to open this file: " +
+		            chooser.getSelectedFile().getName());
+		    } 
+		}
+		if (source == clear) {
+			reset = true;
+		}
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -173,19 +187,6 @@ class MenuPanel extends JPanel implements MouseListener {
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		Object source = e.getSource();
-		if(source == photo) {
-			JFileChooser chooser = new JFileChooser();
-		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-		        "JPG,PNG,GIF Images", "jpg", "gif","png");
-		    chooser.setFileFilter(filter);
-		    int returnVal = chooser.showOpenDialog(getParent());
-		    if(returnVal == JFileChooser.APPROVE_OPTION) {
-		       System.out.println("You chose to open this file: " +
-		            chooser.getSelectedFile().getName());
-	    }
-	        
-		}
 	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
@@ -201,5 +202,13 @@ class MenuPanel extends JPanel implements MouseListener {
 		//border
 		g.setColor(Color.BLACK);
 		g.drawRect(639, 15, 535, 732);
+	
+		if (reset) {
+			g.setColor(Color.WHITE);
+			g.fillRect(639, 15, 535, 732);
+			reset = false;
+		}
+	
 	}
+	
 }
