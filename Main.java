@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -61,6 +62,8 @@ class MenuPanel extends JPanel implements MouseListener {
 	private Font raleway;
 	private JButton photo = new JButton("Upload Photo");
 	private JButton analyze = new JButton("Analyze");
+	private JButton clear = new JButton("Clear");
+	
 	private JLabel title = new JLabel("Aknowtate");
 	
 	public MenuPanel() {
@@ -68,7 +71,8 @@ class MenuPanel extends JPanel implements MouseListener {
 		setLayout(null);
 		
 		//set up menu
-			
+		setBackground(new Color(230,230,250));	
+		
 		raleway = new Font("Raleway",Font.PLAIN,48);
 		//label
 		title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -78,32 +82,42 @@ class MenuPanel extends JPanel implements MouseListener {
 		title.setLocation(new Point(50,15));
 		add(title);
 		
-		raleway = new Font("Raleway",Font.PLAIN,32);
+		raleway = new Font("Raleway",Font.PLAIN,20);
 		//photo button
-		photo.setSize(550,100);
+		photo.setSize(200,60);
 		photo.setFont(raleway);
-		photo.setLocation(new Point(50,70));
-		photo.setBackground(new Color(0,0,0,0));
-		photo.setBorderPainted(false);
+		photo.setLocation(new Point(220,687));
+		photo.setBackground(new Color(178,178,240));
 		photo.setFocusPainted(false);
 		photo.addMouseListener(this);
 		photo.setContentAreaFilled(false);
 		photo.setForeground(Color.BLACK);
+		photo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(photo);
 		
-		
-		// analyze button
-		analyze.setSize(550,100);
+		//analyze button
+		analyze.setSize(200,60);
 		analyze.setFont(raleway);
-		analyze.setLocation(new Point(50,120));
-		analyze.setBackground(new Color(0,0,0,0));
-		analyze.setBorderPainted(false);
+		analyze.setLocation(new Point(10,687));
+		analyze.setBackground(new Color(178,178,240));
 		analyze.setFocusPainted(false);
 		analyze.addMouseListener(this);
 		analyze.setContentAreaFilled(false);
 		analyze.setForeground(Color.BLACK);
+		analyze.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(analyze);
 		
+		//clear button
+		clear.setSize(200,60);
+		clear.setFont(raleway);
+		clear.setLocation(new Point(430,687));
+		clear.setBackground(new Color(178,178,240));
+		clear.setFocusPainted(false);
+		clear.addMouseListener(this);
+		clear.setContentAreaFilled(false);
+		clear.setForeground(Color.BLACK);
+		clear.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		add(clear);
 	}
 
 	@Override
@@ -113,17 +127,21 @@ class MenuPanel extends JPanel implements MouseListener {
 	public void mouseEntered(MouseEvent e) {
 		Object source = e.getSource();
 		
-		Color bforeground = new Color(200,0,0);
+		Color bforeground = new Color(127,127,230);
 		
 		if(source == analyze) {
 			analyze.setForeground(bforeground);
+			analyze.setBorder(BorderFactory.createLineBorder(bforeground));
 		}
 		else if(source == photo) {
 			photo.setForeground(bforeground);
+			photo.setBorder(BorderFactory.createLineBorder(bforeground));
 		}
-		else {
-			analyze.setForeground(new Color(0,0,0));
+		else if(source == clear) {
+			clear.setForeground(bforeground);
+			clear.setBorder(BorderFactory.createLineBorder(bforeground));
 		}
+		
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
@@ -133,13 +151,17 @@ class MenuPanel extends JPanel implements MouseListener {
 		
 		if(source == analyze) {
 			analyze.setForeground(bforeground);
+			analyze.setBorder(BorderFactory.createLineBorder(bforeground));
 		}
 		else if(source == photo) {
 			photo.setForeground(bforeground);
+			photo.setBorder(BorderFactory.createLineBorder(bforeground));
 		}
-		else {
-			analyze.setForeground(new Color(0,0,0));
+		else if(source == clear) {
+			clear.setForeground(bforeground);
+			clear.setBorder(BorderFactory.createLineBorder(bforeground));
 		}
+	
 	}
 	@Override
 	public void mousePressed(MouseEvent arg0) {
@@ -154,9 +176,9 @@ class MenuPanel extends JPanel implements MouseListener {
 		super.paintComponent(g);
 		
 		g.setColor(new Color(255,255,255));
-		g.fillRect(630, 15, 540, 732);
+		g.fillRect(639, 15, 535, 732);
 		//border
 		g.setColor(Color.BLACK);
-		g.drawRect(630, 15, 540, 732);
+		g.drawRect(639, 15, 535, 732);
 	}
 }
