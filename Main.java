@@ -72,6 +72,7 @@ class MenuPanel extends JPanel implements MouseListener {
 	private JButton clear = new JButton("Clear");
 	
 	private JLabel title = new JLabel("Aknowtate");
+	private JLabel def = new JLabel("Definition: ");
 	
 	public MenuPanel() {
 	
@@ -125,6 +126,16 @@ class MenuPanel extends JPanel implements MouseListener {
 		clear.setForeground(Color.BLACK);
 		clear.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(clear);
+		
+		
+		raleway = new Font("Raleway",Font.PLAIN,36);
+		//label
+		def.setHorizontalAlignment(SwingConstants.LEFT);
+		def.setVerticalAlignment(SwingConstants.TOP);
+		def.setSize(550,100);
+		def.setFont(raleway);
+		def.setLocation(new Point(50,90));
+		add(def);
 	}
 
 	@Override
