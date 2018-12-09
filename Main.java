@@ -10,6 +10,8 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
@@ -68,13 +70,15 @@ class MenuPanel extends JPanel implements MouseListener {
 	private JButton clear = new JButton("Clear");
 	
 	private JLabel title = new JLabel("AnKNOWtate");
-	private JLabel def = new JLabel("Definition: ");
+	private JLabel def = new JLabel("Definition ");
 	private ArrayList<String> text = new ArrayList<String>(); //each element is a line
 	
 	private JLabel page = new JLabel();
 	
 	//dictionary
 	private ArrayList<String> d_lines = new ArrayList<String>();
+	private ArrayList<String[]> d_split = new ArrayList<String[]>();
+	private HashMap<String,String> DICT = new HashMap<String,String>();
 	
 	public MenuPanel() {
 		
@@ -92,7 +96,50 @@ class MenuPanel extends JPanel implements MouseListener {
 			if (d_lines.get(i).equals("")) {
 				d_lines.remove(i);
 			}
+			/*else {
+				String[] spl;
+				spl = d_lines.get(i).split(" ");
+				if (i<4000)
+					System.out.println(Arrays.toString(spl));
+				String key = spl[0].toLowerCase();//**********to avoid discrepencies
+				//String[] def = new String[spl.length-1];
+				String def = "";
+				for(int j = 1; j < spl.length-1; j++) {
+					def = def + spl[j] + " "; 
+					//if(j < 20)
+						//System.out.println(key+" "+def);
+				}
+			
+				
+				DICT.put(key, def);
+	
+			}*/
 		}
+		
+		//d_lines.add("Abacus  n. (pl. -cuses) 1 frame with wires along which beads are slid for calculating. 2 archit. Flat slab on top of a capital. [latin from greek from hebrew]");
+		//d_lines.add("Abaft  naut. —adv. In the stern half of a ship. —prep. Nearer the stern than. [from *a2, -baft: see *aft]");
+		//d_lines.add("Abandoned  adj. 1 deserted, forsaken. 2 unrestrained, profligate.");
+		//d_lines.add("Abandon  —v. 1 give up. 2 forsake, desert. 3 (often foll. By to; often refl.) Yield to a passion, another's control, etc. —n. Freedom from inhibitions.  abandonment n. [french: related to *ad-, *ban]");
+		
+		int a = 0;
+		for (int i = 0; i < d_lines.size();i++) {
+			for (int j = 0; j < d_lines.get(i).length();j++) {
+				//System.out.println("!! "+d_lines.get(i).charAt(j));
+				if (d_lines.get(i).substring(j).charAt(j) == ' ') {
+					a = j+3;
+					//System.out.println("WAF");
+					break;
+				}
+			}
+			if (d_lines.get(i).length() > 5)
+				DICT.put(d_lines.get(i).substring(0, a).toLowerCase(),d_lines.get(i).substring(a,(d_lines.get(i).length())));
+			
+		}
+		
+		//System.out.println(DICT.toString());
+		
+		//System.out.println(DICT.toString());
+		
 		//for (int i = 0; i < d_lines.size(); i++) {
 			//System.out.println("RAHMA "+d_lines.get(i));
 		//}
@@ -151,7 +198,7 @@ class MenuPanel extends JPanel implements MouseListener {
 		add(clear);
 		
 		
-		raleway = new Font("Raleway",Font.PLAIN,36);
+		raleway = new Font("Raleway",Font.PLAIN,30);
 		//label
 		def.setHorizontalAlignment(SwingConstants.LEFT);
 		def.setVerticalAlignment(SwingConstants.TOP);
@@ -251,8 +298,13 @@ class MenuPanel extends JPanel implements MouseListener {
 	}
 	///////////////////////////////////////////////////////////
 	
-	public void dictionary(String w) {
-		
+	public void define(String w) {
+		if (DICT.containsKey(w)) {	
+			System.out.println(w + "	" + DICT.get(w));
+		}
+		else {
+			System.out.println("Word Cannot Be Defined");
+		}
 	}
 	
 	//Graphics
@@ -264,8 +316,11 @@ class MenuPanel extends JPanel implements MouseListener {
 		//border
 		g.setColor(Color.BLACK);
 		g.drawRect(639, 15, 535, 732);
-	
-			
+		//
+		define("wolves");
+		define("unchain");
+		define("tinker");
+		
 	}
 	
 }
