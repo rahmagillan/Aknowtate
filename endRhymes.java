@@ -27,13 +27,13 @@ public class endRhymes {
 	    		}
 	    		endWords.add(lastWord.substring(counter,lastWord.length()));
 	    		System.out.println(lastWord.substring(counter,lastWord.length()));
-	    		if(endWords.size()>2){
+	    		if(endWords.size()>1){
 	    			if(endWords.get(index).equals(endWords.get(index-1))){
 	    				int[] tm = {index-1,index};
 	    				indexes.add(tm);
 	    			}
 	    		}
-	    		if(endWords.size()>3){
+	    		if(endWords.size()>2){
 	    			if(endWords.get(index).equals(endWords.get(index-2))){
 	    				int[] tm = {index-2,index};
 	    				indexes.add(tm);
@@ -41,7 +41,14 @@ public class endRhymes {
 	    		}
 	    		index++;
 	    	}
-	    	System.out.println(indexes);
+	    	/*for(int i=0; i<indexes.size();i++){
+	    		System.out.println(indexes.get(i)[0]);
+	    		System.out.println(indexes.get(i)[1]);
+	    		for(int j=0;j<indexes.get(i).length;i++){
+	    			System.out.print(indexes.get(i)[j]+" ");
+	    		}
+	    		System.out.println("");*/
+	    	}
 	    	
 	/*	}
 		catch (Exception e){
