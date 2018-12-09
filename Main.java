@@ -89,7 +89,7 @@ class MenuPanel extends JPanel implements MouseListener {
 	private HashMap<String,String> DICT = new HashMap<String,String>();
 	
 	//alliteratoion
-	List<String> uselessWords = Arrays.asList("of","with","at","into","including","until","against","among","throughout","despite","towards","upon","to","in","for","on","by","about","though","there","i","a","ill","that","you","and","im","an");
+	List<String> uselessWords = Arrays.asList("of","with","at","into","including","until","against","among","throughout","despite","towards","upon","to","in","for","on","by","about","though","there","i","a","ill","that","you","and","im","an","the","she","his","her","had","was","as");
 	ArrayList<String> alit = new ArrayList<String>();
 	ArrayList<int[]> indexes = new ArrayList<int[]>();
 	
@@ -236,7 +236,7 @@ class MenuPanel extends JPanel implements MouseListener {
 		page.setFont(raleway);
 		add(page);
 	
-	
+		//TESTING THIS STUPID STUPIDpage.setText("<html><font color=red>RED</font><br><font color=black>I WANT TO QUIT THIS IS TOO AH</font></html>");
 	
 	
 	}
@@ -284,7 +284,7 @@ class MenuPanel extends JPanel implements MouseListener {
 			    			//System.out.println(define(cleanText.get(i)));
 			    		}
 			    	}
-			    	System.out.println(dwords.toString());/////////////////////////////
+			    	//System.out.println(dwords.toString());/////////////////////////////
 			    
 			    	compWords.setText(compWords.getText()+"</html>");
 			    	
@@ -355,13 +355,60 @@ class MenuPanel extends JPanel implements MouseListener {
 				    	//System.out.print("\n");
 				    }
 			    	
-			    	System.out.println("awords: "+awords);
+			    	//System.out.println("awords: "+awords);
 			    	
 			    	///////////////////////////reseting texxts things
+			    	//page.setText("");
 			    	
+			    	String[] temp;
+			    	String[] ctemp; //cleaned
+ 			    	
+			    	page.setText("<html>");//clear page in case the user did not clear
+			    	for (int i = 0; i < text.size(); i++) {
+			    		//System.out.println(text.get(i));
+			    		
+			    		temp = text.get(i).split(" ");
+			    		ctemp = text.get(i).replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+			    		//page.setText("<html><font color=red>RED</font><br><font color=black>I WANT TO QUIT THIS IS TOO AH</font></html>");
+			    		
+			    		
+			    		for (int j = 0; j < temp.length; j++) {
+			    		
+			    			//System.out.println(dwords);
+			    			
+			    			//alliteration
+			    			if (awords.contains(ctemp[j]+" ") && dwords.contains(ctemp[j])) {
+			    				//System.out.println("WoW");
+			    				page.setText(page.getText()+"<font color=blue>"+temp[j].charAt(0)+"</font>"+"<font color=red>"+temp[j].substring(1,temp[j].length())+"</font>"+" ");
+			    			}
+			    			//dictionary
+			    			//System.out.println(Arrays.toString(temp));
+			    			//System.out.println(Arrays.toString(ctemp));
+			    			else if (dwords.contains(ctemp[j])) {
+			    				page.setText(page.getText()+"<font color=red>"+temp[j]+"</font>"+" ");
+			    			}
+			    			
+			    			else if (awords.contains(ctemp[j]+" ")) { //il y a a random space so im bash fixing
+			    				//System.out.println("AMAZING");
+			    				page.setText(page.getText()+"<font color=blue>"+temp[j].charAt(0)+"</font>"+"<font color=black>"+temp[j].substring(1,temp[j].length())+"</font>"+" ");
+			    			}
+			    			
+			    			else {
+			    				page.setText(page.getText()+"<font color=black>"+temp[j]+"</font>"+" ");
+			    			}
+			    			
+			    		}
+			    		
+			    		//page.setText(page.getText()+text.get(i)+"<br>"); ///////////new linedoes not work
+			    		page.setText(page.getText()+"<br>");
+			    		
+			    
+			    	}
+			    	page.setText(page.getText()+"</html>");
 			    	
 			    	
 		   	   }
+		   
 		    }
 		}
 		if (source == clear) {
