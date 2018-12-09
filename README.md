@@ -1,3 +1,2 @@
 # AnKNOWtate
 Border City Hacks 2018 Project. Java GUI that uses Google Vision to annotate book pages.
-One day Jenny and Rahma were doing computer science project. Then all of a sudden, a wild Ryan appeared out of nowhere, and they became spooked. Summoning her giraffe powers, the Jenny bootied away the wild Ryan and saved the day. Little did she know, a wild Tailpipe in red overalls and a Moussolini moustache and kidnapped Rahma. Jenny the Giraffe decided it was her destiny to go save Rahma the cow, so she set off with her short neck oscilating back and forth to go save Rahma. Unfortunately, the Rahma was too short and nobody could find her, so the fucking end.
