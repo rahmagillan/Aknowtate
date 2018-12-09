@@ -63,7 +63,7 @@ class MenuPanel extends JPanel implements MouseListener {
 	private File bookpage;
 
 	private Font raleway;
-	private JButton photo = new JButton("Upload Photo");
+	private JButton photo = new JButton("Upload");
 	private JButton analyze = new JButton("Analyze");
 	private JButton clear = new JButton("Clear");
 	
@@ -139,7 +139,6 @@ class MenuPanel extends JPanel implements MouseListener {
 		
 		raleway = new Font("Raleway",Font.PLAIN,12);
 		page.setVerticalAlignment(SwingConstants.TOP);//the page's label 639, 15, 535, 732
-		
 		page.setSize(new Dimension(535,732));
 		page.setLocation(new Point(639,15));;
 		page.setFont(raleway);
@@ -166,12 +165,13 @@ class MenuPanel extends JPanel implements MouseListener {
 			    	while (s.hasNextLine()) {
 			    		text.add(s.nextLine());
 			    	}
-			    	page.setText("");//clear page in case the user did not clear
+			    	page.setText("<html>");//clear page in case the user did not clear
 			    	for (int i = 0; i < text.size(); i++) {
 			    		//System.out.println(text.get(i));
 			    		
-			    		page.setText(page.getText()+text.get(i)+"\n"); ///////////new linedoes not work
+			    		page.setText(page.getText()+text.get(i)+"<br>"); ///////////new linedoes not work
 			    	}
+			    	page.setText(page.getText()+"</html>");
 		   	   }
 		    }
 		}
