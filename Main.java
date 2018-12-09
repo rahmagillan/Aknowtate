@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -86,6 +87,11 @@ class MenuPanel extends JPanel implements MouseListener {
 	private ArrayList<String> d_lines = new ArrayList<String>();
 	private ArrayList<String[]> d_split = new ArrayList<String[]>();
 	private HashMap<String,String> DICT = new HashMap<String,String>();
+	
+	//alliteratoion
+	List<String> uselessWords = Arrays.asList("of","with","at","into","including","until","against","among","throughout","despite","towards","upon","to","in","for","on","by","about","though","there","i","a","ill","that","you","and","im","an");
+	ArrayList<String> alit = new ArrayList<String>();
+	ArrayList<int[]> indexes = new ArrayList<int[]>();
 	
 	public MenuPanel() {
 		
@@ -265,24 +271,96 @@ class MenuPanel extends JPanel implements MouseListener {
 			    	page.setText(page.getText()+"</html>");
 			    	
 			    	clean();
-			    	compWords.setText("<html>");
+			    	compWords.setText("<html>");	
 			    	
-			    	Set<String> noRep = new HashSet<String>();		    	
-			    	
-			    	for (int i = 0; i < cleanText.size(); i++) {
-			    		noRep.add(cleanText.get(i));
-			    	}
+			    	ArrayList<String> dwords = new ArrayList<String>();
 			    	
 			    	for (int i = 0; i < cleanText.size();i++) {
 			    		if (cleanText.get(i).length() >= 7) { //HOW TO DFINE COMP WORDS LOL
 			    			if (define(cleanText.get(i)) != null) {
+			    				dwords.add(cleanText.get(i));
 			    				compWords.setText(compWords.getText()+define(cleanText.get(i))+"<br>");
 			    			}
 			    			//System.out.println(define(cleanText.get(i)));
 			    		}
 			    	}
+			    	System.out.println(dwords.toString());/////////////////////////////
 			    
 			    	compWords.setText(compWords.getText()+"</html>");
+			    	
+			    	//alliteration
+			    	
+			    	//more cleaning vaccuuuuuum
+			    	for (int i = 0; i < cleanText.size(); i++) {
+			    		if (cleanText.get(i).length() == 0) {
+			    			cleanText.remove(i);
+			    		}
+			    	}
+			    	
+			    	
+			    	for(int i = 0;i < cleanText.size();i++){
+		    			if(!uselessWords.contains(cleanText.get(i))){
+		    				alit.add(cleanText.get(i));
+		    			}
+			    	}
+			    	
+			    	int alliterCounter = 0;
+			    	for (int i = 0; i < alit.size(); i++){
+			    		if(i!=alit.size()-1){
+			    			char iWordChar  = alit.get(i).charAt(0);
+				    		char i2WordChar = alit.get(i+1).charAt(0);
+				    		//System.out.println(iWordChar+" "+i2WordChar);
+				    		if(iWordChar==i2WordChar){
+				    			if(alliterCounter==0){
+				    				alliterCounter=2;
+				    			}
+				    			else{
+				    				alliterCounter++;
+				    			}
+				    		}
+				    		else{
+				    			if(alliterCounter!=0){
+				    				int[] tmp = new int[alliterCounter];
+				    				for(int j = alliterCounter; j>0;j--){
+				    					tmp[alliterCounter-j] = cleanText.indexOf(alit.get(i-j+1));
+				    				}
+				    				indexes.add(tmp);
+				    				alliterCounter = 0;
+				    			}
+				    			
+				    		}
+				    	}
+				    	//System.out.println("Counter: "+alliterCounter);
+			    	}
+			    	if(alliterCounter!=0){
+			    		int[] tmp = new int[alliterCounter];
+			    		for(int j = alliterCounter; j>0;j--){
+			    			tmp[alliterCounter-j] = cleanText.indexOf(alit.get(alit.size()-j));
+			    		}
+			    		indexes.add(tmp);
+			    		alliterCounter = 0;
+			    	}
+			    	
+			    	//printing
+			    	ArrayList<String> awords = new ArrayList<String>();
+			    	
+			    	for(int i =0;i<indexes.size();i++){
+				    	for(int j = 0;j<indexes.get(i).length;j++){
+				    		if (awords.size() < i)
+				    			awords.set(i, awords.get(i)+cleanText.get(indexes.get(i)[j])+" ");
+				    		else 
+				    			awords.add(cleanText.get(indexes.get(i)[j])+" ");
+				    		//System.out.print(cleanText.get(indexes.get(i)[j])+" ");
+				    	}
+				    	//System.out.print("\n");
+				    }
+			    	
+			    	System.out.println("awords: "+awords);
+			    	
+			    	///////////////////////////reseting texxts things
+			    	
+			    	
+			    	
 		   	   }
 		    }
 		}
