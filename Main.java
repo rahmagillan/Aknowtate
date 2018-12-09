@@ -73,8 +73,32 @@ class MenuPanel extends JPanel implements MouseListener {
 	
 	private JLabel page = new JLabel();
 	
-	public MenuPanel() {
+	//dictionary
+	private ArrayList<String> d_lines = new ArrayList<String>();
 	
+	public MenuPanel() {
+		
+		Scanner d = null;
+		//dictionary things 
+		try {
+			d = new Scanner(new File("Dictionary.txt"));
+		} catch (FileNotFoundException e) {}
+		
+		while(d.hasNextLine()) {
+			d_lines.add(d.nextLine());
+		}
+		//remove blank lines
+		for (int i = 0; i < d_lines.size(); i++) {
+			if (d_lines.get(i).equals("")) {
+				d_lines.remove(i);
+			}
+		}
+		//for (int i = 0; i < d_lines.size(); i++) {
+			//System.out.println("RAHMA "+d_lines.get(i));
+		//}
+		
+		
+		
 		setLayout(null);
 		
 		//set up menu
@@ -139,8 +163,8 @@ class MenuPanel extends JPanel implements MouseListener {
 		
 		raleway = new Font("Raleway",Font.PLAIN,12);
 		page.setVerticalAlignment(SwingConstants.TOP);//the page's label 639, 15, 535, 732
-		page.setSize(new Dimension(535,732));
-		page.setLocation(new Point(639,15));;
+		page.setSize(new Dimension(531,728));
+		page.setLocation(new Point(641,17));;
 		page.setFont(raleway);
 		add(page);
 	}
@@ -226,6 +250,10 @@ class MenuPanel extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent arg0) {
 	}
 	///////////////////////////////////////////////////////////
+	
+	public void dictionary(String w) {
+		
+	}
 	
 	//Graphics
 	public void paintComponent(Graphics g) {
