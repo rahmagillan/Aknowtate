@@ -12,7 +12,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -70,8 +72,13 @@ class MenuPanel extends JPanel implements MouseListener {
 	private JButton clear = new JButton("Clear");
 	
 	private JLabel title = new JLabel("AnKNOWtate");
-	private JLabel def = new JLabel("Definition ");
+	private JLabel def = new JLabel("Definitions ");
+	private JLabel compWords = new JLabel();
 	private ArrayList<String> text = new ArrayList<String>(); //each element is a line
+	
+	////without punc and capatalization
+	private ArrayList<String> cleanText = new ArrayList<String>();
+	
 	
 	private JLabel page = new JLabel();
 	
@@ -207,13 +214,25 @@ class MenuPanel extends JPanel implements MouseListener {
 		def.setLocation(new Point(50,90));
 		add(def);
 		
+		raleway = new Font("Raleway",Font.PLAIN,10);
+		///the complicated words
+		compWords.setHorizontalAlignment(SwingConstants.LEFT);
+		compWords.setVerticalAlignment(SwingConstants.TOP);
+		compWords.setSize(550,550);
+		compWords.setFont(raleway);
+		compWords.setLocation(new Point(50,135));
+		add(compWords);
 		
-		raleway = new Font("Raleway",Font.PLAIN,12);
+		raleway = new Font("Raleway",Font.PLAIN,16);
 		page.setVerticalAlignment(SwingConstants.TOP);//the page's label 639, 15, 535, 732
 		page.setSize(new Dimension(531,728));
 		page.setLocation(new Point(641,17));;
 		page.setFont(raleway);
 		add(page);
+	
+	
+	
+	
 	}
 
 	@Override
@@ -236,6 +255,7 @@ class MenuPanel extends JPanel implements MouseListener {
 			    	while (s.hasNextLine()) {
 			    		text.add(s.nextLine());
 			    	}
+			    	compWords.setText("");
 			    	page.setText("<html>");//clear page in case the user did not clear
 			    	for (int i = 0; i < text.size(); i++) {
 			    		//System.out.println(text.get(i));
@@ -243,11 +263,32 @@ class MenuPanel extends JPanel implements MouseListener {
 			    		page.setText(page.getText()+text.get(i)+"<br>"); ///////////new linedoes not work
 			    	}
 			    	page.setText(page.getText()+"</html>");
+			    	
+			    	clean();
+			    	compWords.setText("<html>");
+			    	
+			    	Set<String> noRep = new HashSet<String>();		    	
+			    	
+			    	for (int i = 0; i < cleanText.size(); i++) {
+			    		noRep.add(cleanText.get(i));
+			    	}
+			    	
+			    	for (int i = 0; i < cleanText.size();i++) {
+			    		if (cleanText.get(i).length() >= 7) { //HOW TO DFINE COMP WORDS LOL
+			    			if (define(cleanText.get(i)) != null) {
+			    				compWords.setText(compWords.getText()+define(cleanText.get(i))+"<br>");
+			    			}
+			    			//System.out.println(define(cleanText.get(i)));
+			    		}
+			    	}
+			    
+			    	compWords.setText(compWords.getText()+"</html>");
 		   	   }
 		    }
 		}
 		if (source == clear) {
 			page.setText("");
+			compWords.setText("");
 		}
 	}
 	@Override
@@ -298,13 +339,29 @@ class MenuPanel extends JPanel implements MouseListener {
 	}
 	///////////////////////////////////////////////////////////
 	
-	public void define(String w) {
+	public String define(String w) {
 		if (DICT.containsKey(w)) {	
-			System.out.println(w + "	" + DICT.get(w));
+			//System.out.println(w + "	" + DICT.get(w));
+			return " -"+w+ "- " + DICT.get(w);
 		}
 		else {
-			System.out.println("Word Cannot Be Defined");
+			//System.out.println("Word Cannot Be Defined");
+			return null;
 		}
+	}
+	
+	public void clean() {
+		//clean text
+		String[] tA;
+		for (int i = 0; i < text.size(); i++) {
+			tA = text.get(i).replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+			for (int j = 0; j < tA.length; j++) {
+				cleanText.add(tA[j]);
+			}
+			
+		}
+		
+		//System.out.println(cleanText.toString());
 	}
 	
 	//Graphics
@@ -317,9 +374,8 @@ class MenuPanel extends JPanel implements MouseListener {
 		g.setColor(Color.BLACK);
 		g.drawRect(639, 15, 535, 732);
 		//
-		define("wolves");
-		define("unchain");
-		define("tinker");
+		//define("wolves");
+		//define("unchain");
 		
 	}
 	
